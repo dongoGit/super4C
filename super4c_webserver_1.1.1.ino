@@ -24,7 +24,7 @@
  * Created: 2025-08-01
  * Last Modified: 2025-08-04
  * 
- * Copyright (c) dongo
+ * Author: dongoF
  * SPDX-License-Identifier: MIT
  */
 
