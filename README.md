@@ -19,7 +19,7 @@ Key features:  <br>
 3. Wi-Fi configuration for connection to your home or work network  <br>
 4. On-board power supply current monitoring (6 channels)  <br>
 5. On-board power switch control  <br>
-6. Main information shown through OLED display
+6. Main information shown through OLED display  <br>
 <br>
 <div align="center">
   <img width="170" height="337" alt="image" src="https://github.com/user-attachments/assets/869e95f6-26a2-4f21-9a66-a6085ce4174f" />
