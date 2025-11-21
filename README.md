@@ -23,7 +23,7 @@ Key features:  <br>
 
 <div align="center">
   <img width="341" height="675" alt="image" src="https://github.com/user-attachments/assets/869e95f6-26a2-4f21-9a66-a6085ce4174f" />
-  <img width="450" height="253" alt="image" src="https://github.com/user-attachments/assets/d1ca3134-5e86-4560-99a1-0a17ecef8694" />
+  <img width="225" height="126" alt="image" src="https://github.com/user-attachments/assets/d1ca3134-5e86-4560-99a1-0a17ecef8694" />
 </div>
 
 
@@ -34,7 +34,7 @@ Ket features:  <br>
 3. More comprehensive monitoring information (temperature/power/wifi stauts, etc.) and control modes  <br>
 4. Can be directly integrated into Home Assistant
 
-<img width="1334" height="1030" alt="image" src="https://github.com/user-attachments/assets/5deb1a12-16ad-4b67-a1bd-905d93a5ba70" />
+<img width="667" height="515" alt="image" src="https://github.com/user-attachments/assets/5deb1a12-16ad-4b67-a1bd-905d93a5ba70" />
 <img width="1027" height="2145" alt="be62a63b-e9d2-46ad-a3e5-574df0bb515c" src="https://github.com/user-attachments/assets/4fe90b6e-de49-4f53-8e1c-ae0f3e2195e1" />
 
 
