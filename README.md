@@ -7,3 +7,10 @@ This is a cluster-type platform built for the Raspberry Pi CM5. This hardware is
 ![super4c](./images/super4c.png)
 
 More information of this board : https://wiki.deskpi.com/super4c/
+
+<h2>What's in this repo?</h2>
+This repository contains two software projects: one is developed using the Arduino IDE, providing basic web server control and status monitoring functions; the other is based on ESPHome, designed for integration with Home Assistant to enable more comprehensive lab integration and advanced automation control.
+
+<h3>Arduino</h3>
+Main features:
+1. wireless accessment t
