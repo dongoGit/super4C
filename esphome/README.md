@@ -26,7 +26,7 @@
 
 <h2>Other Tips</h2>
 1. If you have forgotten the IP address, you can long-press the BOOT button for more than 5 seconds. The ESP32 will then return to AP mode, and you can please refer to the instructions above to proceed.<br>
-2. There are two pages information shown on the OLED display, you can turn pages by a short press of the BOOT button.<br>
+2. The OLED display shows two pages of information. You can cycle through them by short pressing the BOOT button.<br>
 <br>
 Check this page for hardware instructions: https://wiki.deskpi.com/super4c/
 
