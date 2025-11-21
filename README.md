@@ -3,11 +3,9 @@
 </div>
 This is a cluster-type platform built for the Raspberry Pi CM5. This hardware is mini-ITX sized, supports four CM5 channels and expands nearly all of the CM5's interfaces. It also integrates an ESP32 module, enabling remote management capabilities for the entire cluster hardware.
 
-
-<img width="3128" height="1692" alt="super4c" src="https://github.com/user-attachments/assets/c9c0891d-67ae-43f1-b7c7-17af14ad42e8" />
-
-
-More information of this board : https://wiki.deskpi.com/super4c/
+<div align="center">
+  <img width="1564" height="846" alt="super4c" src="https://github.com/user-attachments/assets/c9c0891d-67ae-43f1-b7c7-17af14ad42e8" />
+</div>
 
 <h2>What's in this repository?</h2>
 This repository contains two software projects: one is developed using the Arduino IDE, providing basic web server control and status monitoring functions; the other is based on ESPHome, designed for integration with Home Assistant to enable more comprehensive lab integration and advanced automation control.
@@ -33,9 +31,8 @@ Ket features:  <br>
 3. More comprehensive monitoring information (temperature/power/wifi stauts, etc.) and control modes  <br>
 4. Can be directly integrated into Home Assistant  <br>
 
-<div>
+<div align="center">
   <img width="318" height="168" alt="a5f5ae53-f27e-4012-b82e-1b5e27d693a8" src="https://github.com/user-attachments/assets/1087f33a-e358-417c-89a8-caad27986f0d" />
 </div>
 
-
-
+More information: https://wiki.deskpi.com/super4c/
