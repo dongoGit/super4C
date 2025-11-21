@@ -27,6 +27,15 @@ Key features:  <br>
 </div>
 
 
-<h2>ESPHOME + Home Assistant</h2>
+<h2>ESPHome + Home Assistant</h2>
 Ket features:  <br>
-1. 
+1. All the features supported in the previous Arduino project <br>
+2. OTA functionality, no cable is needed  <br>
+3. More comprehensive monitoring information (temperature/power/wifi stauts, etc.) and control modes  <br>
+4. Can be directly integrated into Home Assistant
+
+<img width="1334" height="1030" alt="image" src="https://github.com/user-attachments/assets/5deb1a12-16ad-4b67-a1bd-905d93a5ba70" />
+<img width="1027" height="2145" alt="be62a63b-e9d2-46ad-a3e5-574df0bb515c" src="https://github.com/user-attachments/assets/4fe90b6e-de49-4f53-8e1c-ae0f3e2195e1" />
+
+
+
