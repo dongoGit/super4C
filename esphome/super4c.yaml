@@ -1,0 +1,486 @@
+esphome:
+  name: super4c
+  friendly_name: Super4C Controller
+
+substitutions:
+  dc_undervolt_v: "18.0"       # DC undervoltage threshhold (V)
+  psu_undervolt_v: "4.8"       # 5V undervoltage threshhold (V)
+  dc_overcurrent_ma: "7000"    # DC overcurrent threshhold (mA)
+  psu_overcurrent_ma: "8000"   # PSU overcurrent threshhold (mA)
+
+# ===== OLED pages, global variable (0: page 1; 1: page 2) =====
+globals:
+  - id: oled_page
+    type: int
+    restore_value: yes
+    initial_value: '0'
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+logger:
+
+api:
+  # if needed 
+  # encryption:
+  #   key: !secret esphome_api_key
+
+ota:
+  - platform: esphome
+    password: "dongo"
+
+wifi:
+  ssid: "yourssid"
+  password: "yourpassword"
+
+  reboot_timeout: 15min
+
+  ap:
+    ssid: "Super4C"
+    password: "12345678"
+
+captive_portal:
+
+web_server:
+  port: 80
+
+# ===== I2C bus：OLED + INA3221 =====
+i2c:
+  sda: 13
+  scl: 15
+  scan: true
+
+# ===== WiFi / Alarms Summary / Uptime Text =====
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "Super4C IP Address"
+      id: wifi_ip
+      entity_category: diagnostic
+    ssid:
+      name: "Super4C WiFi SSID"
+      id: wifi_ssid
+      entity_category: diagnostic
+
+  # Alarm Summary Text: Showing current alarm status to HA
+  - platform: template
+    id: alarm_summary
+    name: "Super4C Alarm Summary"
+    icon: "mdi:alert"
+    lambda: |-
+
+      // 1) DC redudency: both DC1 and DC2 are lower that undervoltage threshhold
+      bool dc_undervolt =
+        (id(dc1_voltage).state < ${dc_undervolt_v}) &&
+        (id(dc2_voltage).state < ${dc_undervolt_v});
+
+      // 2) DC overcurrent: DC1 + DC2 > overthreshhold current
+      float dc_total_current = id(dc1_current).state + id(dc2_current).state;
+      bool dc_overcurrent = dc_total_current > ${dc_overcurrent_ma};
+
+      // 3) PSU1~4: Any low voltage or overcurrent condition constitutes a fault
+      bool psu1_fault =
+        (id(psu1_voltage).state < ${psu_undervolt_v}) ||
+        (id(psu1_current).state > ${psu_overcurrent_ma});
+      bool psu2_fault =
+        (id(psu2_voltage).state < ${psu_undervolt_v}) ||
+        (id(psu2_current).state > ${psu_overcurrent_ma});
+      bool psu3_fault =
+        (id(psu3_voltage).state < ${psu_undervolt_v}) ||
+        (id(psu3_current).state > ${psu_overcurrent_ma});
+      bool psu4_fault =
+        (id(psu4_voltage).state < ${psu_undervolt_v}) ||
+        (id(psu4_current).state > ${psu_overcurrent_ma});
+
+      bool any_psu_fault = psu1_fault || psu2_fault || psu3_fault || psu4_fault;
+
+      if (!dc_undervolt && !dc_overcurrent && !any_psu_fault) {
+        return std::string("OK");
+      }
+
+      std::string msg;
+
+      if (dc_undervolt) {
+        msg += "DC undervolt; ";
+      }
+      if (dc_overcurrent) {
+        msg += "DC overcurrent; ";
+      }
+      if (psu1_fault) {
+        msg += "PSU1 fault; ";
+      }
+      if (psu2_fault) {
+        msg += "PSU2 fault; ";
+      }
+      if (psu3_fault) {
+        msg += "PSU3 fault; ";
+      }
+      if (psu4_fault) {
+        msg += "PSU4 fault; ";
+      }
+
+      return msg;
+
+  # Uptime test：display as “X h YY m” for HA
+  - platform: template
+    id: uptime_hm
+    name: "Super4C Uptime (HM)"
+    icon: "mdi:clock-outline"
+    lambda: |-
+      uint32_t seconds = (uint32_t) id(uptime_s).state;
+      uint32_t minutes = seconds / 60;
+      uint32_t hours = minutes / 60;
+      minutes = minutes % 60;
+      char buf[16];
+      sprintf(buf, "%2u h %02u m", (unsigned) hours, (unsigned) minutes);
+      return std::string(buf);
+
+# ===== sensor：INA3221 + WiFi + Uptime + power + energy =====
+sensor:
+  # chip #1 INA3221, address 0x40：DC1 / DC2 / PSU1
+  - platform: ina3221
+    address: 0x40
+    update_interval: 1s
+
+    channel_1:
+      shunt_resistance: 0.02 ohm
+      current:
+        id: dc1_current
+        name: "DC1 Current"
+        unit_of_measurement: "mA"
+        accuracy_decimals: 0
+        filters:
+          - multiply: 1000.0   # A -> mA
+      bus_voltage:
+        id: dc1_voltage
+        name: "DC1 Voltage"
+        unit_of_measurement: "V"
+        accuracy_decimals: 2
+
+    channel_2:
+      shunt_resistance: 0.02 ohm
+      current:
+        id: dc2_current
+        name: "DC2 Current"
+        unit_of_measurement: "mA"
+        accuracy_decimals: 0
+        filters:
+          - multiply: 1000.0
+      bus_voltage:
+        id: dc2_voltage
+        name: "DC2 Voltage"
+        unit_of_measurement: "V"
+        accuracy_decimals: 2
+
+    channel_3:
+      shunt_resistance: 0.02 ohm
+      current:
+        id: psu1_current
+        name: "PSU1 Current"
+        unit_of_measurement: "mA"
+        accuracy_decimals: 0
+        filters:
+          - multiply: 1000.0
+      bus_voltage:
+        id: psu1_voltage
+        name: "PSU1 Voltage"
+        unit_of_measurement: "V"
+        accuracy_decimals: 2
+
+  # chip #2 INA3221, address 0x41：PSU2 / PSU3 / PSU4
+  - platform: ina3221
+    address: 0x41
+    update_interval: 1s
+
+    channel_1:
+      shunt_resistance: 0.02 ohm
+      current:
+        id: psu2_current
+        name: "PSU2 Current"
+        unit_of_measurement: "mA"
+        accuracy_decimals: 0
+        filters:
+          - multiply: 1000.0
+      bus_voltage:
+        id: psu2_voltage
+        name: "PSU2 Voltage"
+        unit_of_measurement: "V"
+        accuracy_decimals: 2
+
+    channel_2:
+      shunt_resistance: 0.02 ohm
+      current:
+        id: psu3_current
+        name: "PSU3 Current"
+        unit_of_measurement: "mA"
+        accuracy_decimals: 0
+        filters:
+          - multiply: 1000.0
+      bus_voltage:
+        id: psu3_voltage
+        name: "PSU3 Voltage"
+        unit_of_measurement: "V"
+        accuracy_decimals: 2
+
+    channel_3:
+      shunt_resistance: 0.02 ohm
+      current:
+        id: psu4_current
+        name: "PSU4 Current"
+        unit_of_measurement: "mA"
+        accuracy_decimals: 0
+        filters:
+          - multiply: 1000.0
+      bus_voltage:
+        id: psu4_voltage
+        name: "PSU4 Voltage"
+        unit_of_measurement: "V"
+        accuracy_decimals: 2
+
+  # WiFi signal strength
+  - platform: wifi_signal
+    name: "Super4C WiFi Signal"
+    id: wifi_signal_dbm
+    update_interval: 5s
+
+  # Uptime (s)，for OLED and uptime_hm text
+  - platform: uptime
+    name: "Super4C Uptime (s)"
+    id: uptime_s
+    unit_of_measurement: "s"
+    accuracy_decimals: 0
+    update_interval: 10s
+
+  # DC: total power comsumption (W) = sum of two DC input port
+  - platform: template
+    id: dc_total_power
+    name: "DC Total Power"
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 1
+    lambda: |-
+      float p1 = id(dc1_voltage).state * (id(dc1_current).state / 1000.0f);
+      float p2 = id(dc2_voltage).state * (id(dc2_current).state / 1000.0f);
+      return p1 + p2;
+
+  # DC: total energy (Wh)
+  - platform: integration
+    name: "DC Energy"
+    id: dc_energy
+    sensor: dc_total_power
+    time_unit: h
+    unit_of_measurement: "Wh"
+    device_class: energy
+    state_class: total_increasing
+
+  # ESP32 internal temperature (might have some error)
+  - platform: internal_temperature
+    name: "ESP32 Internal Temperature"
+    id: chip_temp
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+
+# ===== OLED font =====
+font:
+  - file: "gfonts://Roboto"
+    id: font_small
+    size: 10
+  - file: "gfonts://Roboto"
+    id: font_tiny
+    size: 8
+  - file: "gfonts://Roboto"
+    id: font_title
+    size: 12
+
+# ===== OLED UI, two pages =====
+display:
+  - platform: ssd1306_i2c
+    model: "SSD1306 128x64"
+    address: 0x3C
+    id: oled
+    update_interval: 500ms
+    lambda: |-
+      int page = id(oled_page);   // 0: status page; 1: power page
+
+      if (page == 0) {
+        // ---------------- page 1 : IP / WiFi / Uptime / temperature / power / energy ----------------
+        it.printf(0, 0, id(font_title), "Super4C Status");
+
+        // WiFi SSID + signal
+        //if (id(wifi_ssid).has_state()) {
+        //  it.printf(8, 12, id(font_tiny), "SSID: %s", id(wifi_ssid).state.c_str());
+        //} else {
+        //  it.printf(8, 12, id(font_tiny), "SSID: (unknown)");
+        //}
+
+        if (id(wifi_ip).has_state()) {
+          it.printf(4, 12, id(font_tiny), "IP  %s", id(wifi_ip).state.c_str());
+        } else {
+          it.printf(4, 12, id(font_tiny), "IP  (connecting)");
+        }
+
+        it.printf(4, 20, id(font_tiny), "WIFI  %.0f dBm", id(wifi_signal_dbm).state);
+
+        // Uptime convert seconds to “X h YY m”
+        uint32_t seconds = (uint32_t) id(uptime_s).state;
+        uint32_t minutes = seconds / 60;
+        uint32_t hours = minutes / 60;
+        minutes = minutes % 60;
+        it.printf(4, 28, id(font_tiny), "Up  %2u h %02u m", (unsigned) hours, (unsigned) minutes);
+
+        // temperature inside ESP32
+        it.printf(4, 36, id(font_tiny), "Temp  %.1f C", id(chip_temp).state);
+
+        // DC power + energy
+        it.printf(4, 44, id(font_tiny), "Pdc  %5.1f W", id(dc_total_power).state);
+        it.printf(4, 52, id(font_tiny), "Edc  %6.2f Wh", id(dc_energy).state);
+
+        // footer
+        it.printf(96, 52, id(font_tiny), "Pg1/2");
+      } else {
+
+        // ---------------- page 2 : DC/PSU power monitor ----------------
+        it.printf(0, 0, id(font_title), "Super4C Power");
+
+        // Alarm sign: up-right coner shows "ALM"
+        bool dc_undervolt =
+          (id(dc1_voltage).state < ${dc_undervolt_v}) &&
+          (id(dc2_voltage).state < ${dc_undervolt_v});
+
+        bool dc_overcurrent =
+          (id(dc1_current).state + id(dc2_current).state) > ${dc_overcurrent_ma};
+
+        bool psu_fault =
+          (id(psu1_voltage).state < ${psu_undervolt_v}) ||
+          (id(psu2_voltage).state < ${psu_undervolt_v}) ||
+          (id(psu3_voltage).state < ${psu_undervolt_v}) ||
+          (id(psu4_voltage).state < ${psu_undervolt_v}) ||
+          (id(psu1_current).state > ${psu_overcurrent_ma}) ||
+          (id(psu2_current).state > ${psu_overcurrent_ma}) ||
+          (id(psu3_current).state > ${psu_overcurrent_ma}) ||
+          (id(psu4_current).state > ${psu_overcurrent_ma});
+
+        bool alarm = dc_undervolt || dc_overcurrent || psu_fault;
+
+        if (alarm) {
+          it.printf(96, 0, id(font_small), "ALM");
+        } else {
+          it.printf(96, 0, id(font_small), "OK ");
+        }
+
+        // 6 power supply channels : voltage and current
+        it.printf(4, 12, id(font_tiny), "DC1 : %5.2fV  %5.2fA",
+                  id(dc1_voltage).state,
+                  id(dc1_current).state / 1000.0f);
+        it.printf(4, 20, id(font_tiny), "DC2 : %5.2fV  %5.2fA",
+                  id(dc2_voltage).state,
+                  id(dc2_current).state / 1000.0f);
+
+        it.printf(4, 28, id(font_tiny), "P1 : %5.2fV  %5.2fA",
+                  id(psu1_voltage).state,
+                  id(psu1_current).state / 1000.0f);
+        it.printf(4, 36, id(font_tiny), "P2 : %5.2fV  %5.2fA",
+                  id(psu2_voltage).state,
+                  id(psu2_current).state / 1000.0f);
+        it.printf(4, 44, id(font_tiny), "P3 : %5.2fV  %5.2fA",
+                  id(psu3_voltage).state,
+                  id(psu3_current).state / 1000.0f);
+        it.printf(4, 52, id(font_tiny), "P4 : %5.2fV  %5.2fA",
+                  id(psu4_voltage).state,
+                  id(psu4_current).state / 1000.0f);
+
+        // footer
+        it.printf(96, 52, id(font_tiny), "Pg2/2");
+      }
+
+# ===== 8 GPIO used as power switch =====
+switch:
+  # 4 PSU switchs (LOW = ON → inverted: true)
+  - platform: gpio
+    pin: 2
+    id: psu1_switch
+    name: "PSU #1"
+    inverted: true
+    restore_mode: ALWAYS_ON
+
+  - platform: gpio
+    pin: 4
+    id: psu2_switch
+    name: "PSU #2"
+    inverted: true
+    restore_mode: ALWAYS_ON
+
+  - platform: gpio
+    pin: 16
+    id: psu3_switch
+    name: "PSU #3"
+    inverted: true
+    restore_mode: ALWAYS_ON
+
+  - platform: gpio
+    pin: 17
+    id: psu4_switch
+    name: "PSU #4"
+    inverted: true
+    restore_mode: ALWAYS_ON
+
+  # 4 CM5 switchs
+  - platform: gpio
+    pin: 14
+    id: cm5_1_switch
+    name: "CM5 #1"
+    restore_mode: ALWAYS_ON
+
+  - platform: gpio
+    pin: 27
+    id: cm5_2_switch
+    name: "CM5 #2"
+    restore_mode: ALWAYS_ON
+
+  - platform: gpio
+    pin: 26
+    id: cm5_3_switch
+    name: "CM5 #3"
+    restore_mode: ALWAYS_ON
+
+  - platform: gpio
+    pin: 25
+    id: cm5_4_switch
+    name: "CM5 #4"
+    restore_mode: ALWAYS_ON
+
+# ===== Reset / factory reset button (GPIO0)：Short press to turn pages; long press for 5 seconds to perform a factory reset ===== 
+button:
+  - platform: factory_reset
+    id: super4c_factory_reset
+    name: "Super4C Factory Reset"
+    entity_category: config
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 0
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    id: reset_button
+    name: "Super4C BOOT/Reset Button"
+    on_multi_click:
+      # short press (<= 800ms)：turn pages
+      - timing:
+          - ON for at most 800ms
+        then:
+          - lambda: |-
+              id(oled_page) = (id(oled_page) + 1) % 2;
+              ESP_LOGI("super4c", "OLED page switched to %d", id(oled_page));
+      # long press >= 5s：factory reset (include clearing the WIFI configuration)
+      - timing:
+          - ON for at least 5s
+        then:
+          - logger.log: "Reset button long-pressed, factory reset!"
+          - button.press: super4c_factory_reset
+
