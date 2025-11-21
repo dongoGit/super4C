@@ -4,7 +4,7 @@
 
 2. Before downloading the firmware, set the board to UART download mode by pressing both the EN and BOOT buttons simultaneously. Then release the EN button first, followed by the BOOT button.<br>
 
-3. Build the project using the Arduino IDE and download the firmware.<br>
+3. Build the project (./src/esp32_webserver_1.1.2.ino) using the Arduino IDE and download the firmware.<br>
 
 4. Once the download is complete, press the EN button to restart the ESP32.<br>
 
