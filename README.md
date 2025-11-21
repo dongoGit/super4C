@@ -3,7 +3,7 @@ is a cluster-type platform built for the Raspberry Pi CM5. This hardware mini-IT
 
 ![super4c](./images/super4c.png)
 
-| ESP32-WROOM<br><br>-32E-N4 |           | Super4C功能         |                                                                                                                                                         |
+| ESP32-WROOM-32E-N4                     | Pin definition                                                                                                                                                                       |
 | -------------------------- | --------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1                          | GND       | GND               | Ground                                                                                                                                                  |
 | 2                          | 3V3       | 3V3               | Power Supply                                                                                                                                            |
