@@ -6,3 +6,4 @@ This is a cluster-type platform built for the Raspberry Pi CM5. This hardware is
 
 ![super4c](./images/super4c.png)
 
+More information of this board : https://wiki.deskpi.com/super4c/
