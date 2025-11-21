@@ -18,4 +18,6 @@
 
 9. After reboot, the new IP address assigned to the ESP32 will be shown on the OLED display. If no display is available, you can check the connected devices list in your router’s admin panel to find the IP address.<br>
 
-10. Enter this new IP address into your web browser to access and fully control the web server.<br>
+10. Enter this new IP address into your web browser to access and fully control the web server.<br><br>
+
+Check this page for hardware instructions: https://wiki.deskpi.com/super4c/
