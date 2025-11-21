@@ -8,7 +8,6 @@ This is a cluster-type platform built for the Raspberry Pi CM5. This hardware is
   <img width="782" height="423" alt="super4c" src="https://github.com/user-attachments/assets/c9c0891d-67ae-43f1-b7c7-17af14ad42e8" />
 </div>
 <br>
-<br>
 <h2>What's in this repository?</h2>
 This repository contains two software projects: one is developed using the Arduino IDE, providing basic web server control and status monitoring functions; the other is based on ESPHome, designed for integration with Home Assistant to enable more comprehensive lab integration and advanced automation control.
 
@@ -35,6 +34,5 @@ Ket features:  <br>
 <div align="center">
   <img width="318" height="168" alt="a5f5ae53-f27e-4012-b82e-1b5e27d693a8" src="https://github.com/user-attachments/assets/1087f33a-e358-417c-89a8-caad27986f0d" />
 </div>
-<br>
 <br>
 More information: https://wiki.deskpi.com/super4c/
