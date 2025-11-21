@@ -3,7 +3,6 @@ is a cluster-based hardware solution built on the Raspberry Pi CM5. This hardwar
 
 ![DEMO](./images/super4c.png)
 
-|                            |           |                   |                                                                                                                                                         |
 | -------------------------- | --------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ESP32-WROOM<br><br>-32E-N4 |           | Super4C功能         |                                                                                                                                                         |
 | 1                          | GND       | GND               | Ground                                                                                                                                                  |
