@@ -23,7 +23,6 @@ Key features:  <br>
 
 <div align="center">
   <img width="170" height="337" alt="image" src="https://github.com/user-attachments/assets/869e95f6-26a2-4f21-9a66-a6085ce4174f" />
-  <img width="225" height="126" alt="image" src="https://github.com/user-attachments/assets/d1ca3134-5e86-4560-99a1-0a17ecef8694" />
 </div>
 
 
@@ -32,10 +31,11 @@ Ket features:  <br>
 1. All the features supported in the previous Arduino project <br>
 2. OTA functionality, no cable is needed  <br>
 3. More comprehensive monitoring information (temperature/power/wifi stauts, etc.) and control modes  <br>
-4. Can be directly integrated into Home Assistant
+4. Can be directly integrated into Home Assistant  <br>
 
-<img width="333" height="257" alt="image" src="https://github.com/user-attachments/assets/5deb1a12-16ad-4b67-a1bd-905d93a5ba70" />
-<img width="256" height="536" alt="be62a63b-e9d2-46ad-a3e5-574df0bb515c" src="https://github.com/user-attachments/assets/4fe90b6e-de49-4f53-8e1c-ae0f3e2195e1" />
+<div>
+  <img width="318" height="168" alt="a5f5ae53-f27e-4012-b82e-1b5e27d693a8" src="https://github.com/user-attachments/assets/1087f33a-e358-417c-89a8-caad27986f0d" />
+</div>
 
 
 
