@@ -19,4 +19,6 @@ Main features:  <br>
 4. On-board power supply current monitoring (6 channels)  <br>
 5. On-board power switch control  <br>
 
-<img width="341" height="675" alt="image" src="https://github.com/user-attachments/assets/869e95f6-26a2-4f21-9a66-a6085ce4174f" />
+<div align="center">
+  <img width="341" height="675" alt="image" src="https://github.com/user-attachments/assets/869e95f6-26a2-4f21-9a66-a6085ce4174f" />
+</div>
