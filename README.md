@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Super4C</h1> 
 </div>
-This is a cluster-type platform built for the Raspberry Pi CM5. This hardware is mini-ITX sized, supports four CM5 channels and expands nearly all of the CM5's interfaces. It also integrates an ESP32 module, enabling remote management capabilities for the entire cluster hardware. <br>
+This is a cluster platform designed for the Raspberry Pi Compute Module 5 (CM5). Built in the mini-ITX form factor, it supports up to four CM5 modules and expands nearly all available interfaces. The platform also incorporates an ESP32 module to provide full remote management capabilities for the entire cluster system. <br>
 <br>
 
 <div align="center">
