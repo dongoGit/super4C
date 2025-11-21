@@ -21,6 +21,6 @@
 10. Enter this new IP address into your web browser to access and fully control the web server.<br><br>
 
 <h2>Other Tips</h2>
-If you have forgotten the IP address, you can long-press the BOOT button for more than 5 seconds. The ESP32 will then return to AP mode, and you can please refer to the instructions above to proceed.<br><br>
-
+If you have forgotten the IP address, you can long-press the BOOT button for more than 5 seconds. The ESP32 will then return to AP mode, and you can please refer to the instructions above to proceed.<br>
+<br>
 Check this page for hardware instructions: https://wiki.deskpi.com/super4c/
