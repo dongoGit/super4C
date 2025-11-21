@@ -22,7 +22,6 @@ Key features:  <br>
 <div align="center">
   <img width="170" height="337" alt="image" src="https://github.com/user-attachments/assets/869e95f6-26a2-4f21-9a66-a6085ce4174f" />
 </div>
-<br>
 <h2>ESPHome + Home Assistant</h2>
 Ket features:  <br>
 1. All the features supported in the previous Arduino project <br>
@@ -31,7 +30,6 @@ Ket features:  <br>
 4. Can be directly integrated into Home Assistant  <br>
 <br>
 <div align="center">
-  <img width="636" height="336" alt="a5f5ae53-f27e-4012-b82e-1b5e27d693a8" src="https://github.com/user-attachments/assets/1087f33a-e358-417c-89a8-caad27986f0d" />
+  <img width="424" height="224" alt="a5f5ae53-f27e-4012-b82e-1b5e27d693a8" src="https://github.com/user-attachments/assets/1087f33a-e358-417c-89a8-caad27986f0d" />
 </div>
-<br>
 More information: https://wiki.deskpi.com/super4c/
