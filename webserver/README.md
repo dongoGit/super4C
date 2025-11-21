@@ -1,4 +1,4 @@
-Usage Instructions:
+<h2>Usage Instructions:</h2>
 
 1. Connect the cluster to a computer using a USB-to-UART cable, and install an OLED display (SSD1306 compatible). <br>
 
