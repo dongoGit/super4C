@@ -8,9 +8,9 @@ This is a cluster-type platform built for the Raspberry Pi CM5. This hardware is
   <img width="782" height="423" alt="super4c" src="https://github.com/user-attachments/assets/c9c0891d-67ae-43f1-b7c7-17af14ad42e8" />
 </div>
 <h2>What's in this repository?</h2>
-This repository contains two software projects: one is developed using the Arduino IDE, providing basic web server control and status monitoring functions; the other is based on ESPHome, designed for integration with Home Assistant to enable more comprehensive lab integration and advanced automation control.
+This repository contains two software projects: one is a simple webserver developed with the Arduino IDE, providing basic control and status monitoring functions; the other is based on ESPHome, and can be integration into your Home Assistant to enable more comprehensive lab integration and advanced automation control.
 
-<h2>Arduino</h2>
+<h2>Simple webserver</h2>
 Key features:  <br>
 1. Integrated web server functionality  <br>
 2. Wireless network access (initially via AP mode, switchable to STA mode after configuration)  <br>
