@@ -20,13 +20,14 @@
 
 11. Upon a successful connection in STA mode, the IP address assigned to the ESP32 will be shown on the OLED display. If no display is available, you can check the connected devices list in your router’s admin panel to find the IP address.<br>
 
-12. Navigate to this IP address using your web browser to gain complete administrative control over the device's web server.<br><br>
+12. Navigate to this IP address using your web browser to gain complete administrative control over the device's web server.<br>
 
 13. Login into your Home Assistant server and enjoy the integration.
 
 <h2>Other Tips</h2>
 1. If you have forgotten the IP address, you can long-press the BOOT button for more than 5 seconds. The ESP32 will then return to AP mode, and you can please refer to the instructions above to proceed.<br>
 2. There are two pages information shown on the OLED display, you can turn pages by a short press of the BOOT button.
+<br>
 <br>
 Check this page for hardware instructions: https://wiki.deskpi.com/super4c/
 
