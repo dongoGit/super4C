@@ -1,10 +1,10 @@
-<h1>Super4C</h1>
+# Super4C 
 is a cluster-based hardware solution built on the Raspberry Pi CM5. This hardware supports four CM5 channels and expands nearly all of the CM5's interfaces. It also integrates an ESP32 processing module, enabling remote management capabilities for the entire cluster device.
 
-![DEMO](./images/super4c.png)
+![[Pasted image 20251121162152.png]]
 
-| -------------------------- | --------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ESP32-WROOM<br><br>-32E-N4 |           | Super4C功能         |                                                                                                                                                         |
+| -------------------------- | --------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1                          | GND       | GND               | Ground                                                                                                                                                  |
 | 2                          | 3V3       | 3V3               | Power Supply                                                                                                                                            |
 | 3                          | EN        | EN                | Connected to SW2, when press down, signal goes LOW<br><br>HIGH：ON, enables ESP32,<br><br>LOW：OFF, shuts down ESP32                                      |
