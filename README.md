@@ -12,9 +12,9 @@ More information of this board : https://wiki.deskpi.com/super4c/
 This repository contains two software projects: one is developed using the Arduino IDE, providing basic web server control and status monitoring functions; the other is based on ESPHome, designed for integration with Home Assistant to enable more comprehensive lab integration and advanced automation control.
 
 <h3>Arduino</h3>
-Main features:  
-1. Integrated web server functionality  
-2. Wireless network access (initially via AP mode, switchable to STA mode after configuration)  
-3. Wi-Fi configuration for connection to your home or work network  
-4. On-board power supply current monitoring (6 channels)  
-5. On-board power switch control  
+Main features:  <br>
+1. Integrated web server functionality  <br>
+2. Wireless network access (initially via AP mode, switchable to STA mode after configuration)  <br>
+3. Wi-Fi configuration for connection to your home or work network  <br>
+4. On-board power supply current monitoring (6 channels)  <br>
+5. On-board power switch control  <br>
